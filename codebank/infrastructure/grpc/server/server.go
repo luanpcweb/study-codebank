@@ -6,6 +6,9 @@ import (
 	"codebank/usecase"
 	"log"
 	"net"
+
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type GRPCServer struct {
@@ -25,9 +28,9 @@ func (g GRPCServer) Serve() {
 	transactionService := service.NewTransactionService()
 	transactionService.ProcessTransactionUseCase = g.ProcessTransactionUseCase
 
-	grpcServer := grpc.NewService()
+	grpcServer := grpc.NewServer()
 
-	reflection.Serve(lis)
+	reflection.Register(grpcServer)
 
 	pb.RegisterPaymentServiceServer(grpcServer, transactionService)
 	grpcServer.Serve(lis)
