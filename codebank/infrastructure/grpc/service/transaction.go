@@ -7,7 +7,7 @@ import (
 	"context"
 
 	"github.com/golang/protobuf/ptypes/empty"
-	"google.golang.org/genproto/googleapis/rpc/code"
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
@@ -35,11 +35,11 @@ func (t *TransactionService) Payment(ctx context.Context, in *pb.PaymentRequest)
 
 	transaction, err := t.ProcessTransactionUseCase.ProcessTransaction(transactionDto)
 	if err != nil {
-		return &empty.Empty{}, status.Error(code.Code_FAILED_PRECONDITION, err.Error())
+		return &empty.Empty{}, status.Error(codes.FailedPrecondition, err.Error())
 	}
 
 	if transaction.Status != "approved" {
-		return &empty.Empty{}, status.Error(code.Code_FAILED_PRECONDITION, "transaction rejected by bank")
+		return &empty.Empty{}, status.Error(codes.FailedPrecondition, "transaction rejected by bank")
 	}
 
 	return &empty.Empty{}, nil
