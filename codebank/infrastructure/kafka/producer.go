@@ -28,6 +28,8 @@ func (k *KafkaProducer) Publish(msg string, topic string) error {
 
 	err := k.Producer.Produce(message, nil)
 	if err != nil {
-		return nil
+		return err
 	}
+
+	return nil
 }
