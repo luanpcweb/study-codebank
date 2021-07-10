@@ -25,7 +25,7 @@ func (u UseCaseTransaction) ProcessTransaction(transactionDto dto.Transaction) (
 	}
 
 	creditCard.ID = ccBalanceAndLimit.ID
-	creditCard.Name = ccBalanceAndLimit.Name
+	creditCard.Limit = ccBalanceAndLimit.Limit
 	creditCard.Balance = ccBalanceAndLimit.Balance
 
 	t := u.newTransaction(transactionDto, ccBalanceAndLimit)
